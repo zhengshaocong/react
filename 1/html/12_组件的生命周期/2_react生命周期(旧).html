@@ -1,0 +1,125 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-24 17:03:28
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+    <script type="text/babel">
+        class Add extends React.Component{
+            constructor(props){
+                console.log('Count-constructor')
+                super(props)
+            }
+            state={
+                count:0
+            }
+            add=()=>{
+                let {count}=this.state
+                count+=1
+                this.setState({count})
+            }
+            remove=()=>{
+                ReactDOM.unmountComponentAtNode(document.getElementById('text'))
+            }
+            update=()=>{
+                this.forceUpdate()
+            }
+            componentWillMount(){//组件将要挂载
+                console.log('componentWillMount')
+            }
+            componentDidMount(){//组件挂载完毕 
+                console.log('componentDidMount')
+            }
+            componentWillUnmount(){
+                console.log('componentWillUnmount')
+            }
+            shouldComponentUpdate(){//是否允许组件变更的阀门 注意 状态会正常先更新 
+                let {count} =this.state
+                console.log('shouldComponentUpdate')
+                if(count>5){
+                    return true
+                }else{
+                    return false
+                }
+            }
+            componentWillUpdate(){//组件是将要被更新
+                console.log('componentWillUpdate')
+            }
+            componentDidUpdate(){//组件更新完毕
+                console.log('componentDidUpdate')
+            }
+            render() {
+                console.log('rend')
+                const {count} =this.state
+                return (
+                    <div>
+                        <h1>当前为{count}</h1>
+                        <button onClick={this.add}>点我+1</button>   
+                        <button onClick={this.remove}>卸载组件</button>
+                        <button onClick={this.update}>强制更新</button>  
+                    </div>
+                )   
+            }
+        }
+
+        class A extends React.Component{
+            state={
+                carName:'奔驰'
+            }
+            changeCar=()=>{
+                this.setState({
+                    carName:'奥拓'
+                })
+            }
+            render(){
+                return (
+                    <div>
+                        我是A
+                        <button onClick={this.changeCar}>换车</button>
+                        <B carName={this.state.carName}/>    
+                    </div>
+                )
+            }
+        }
+
+        class B extends React.Component{
+            static propTypes={
+                carName:PropTypes.string.isRequired
+            }
+            static defaultProps={
+                carName:'没车'
+            }
+            componentWillReceiveProps(props){
+                console.log('componentWillReceiveProps',props)
+            }
+            render(){
+                return (
+                    <div>
+                    我是B
+                    <p>车的名字{this.props.carName}</p>
+                    </div>
+                )
+            }
+        }
+        
+        ReactDOM.render(<A />,document.getElementById('text'))
+    </script>
+</body>
+</html>

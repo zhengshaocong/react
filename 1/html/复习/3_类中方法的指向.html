@@ -1,0 +1,37 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-22 10:25:41
+ * @LastEditTime: 2021-02-22 10:38:00
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\复习\3_类中方法的指向.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Person{
+            constructor(name,age){
+                this.name=name
+                this.age=age
+            }
+            speak(){
+                console.log(this)
+            }
+        }
+        let p1=new Person('tom',18)
+        p1.speak()// Person
+        let x=p1.speak
+        x()//undefined
+
+        //使用x()时 并不是实例自身调用 而是直接调用 this原本因指向window 而由于严格模式window限制为undefined
+        //注意 x只是实例对象沿着原型链找到的方法赋值 它的调用并不是实例的调用 而是直接调用
+    </script>
+</body>
+</html>

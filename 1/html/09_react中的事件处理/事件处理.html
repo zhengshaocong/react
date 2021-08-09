@@ -1,0 +1,53 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-23 17:21:28
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Demo extends React.Component{
+            /*
+                （1）通过onXxx 属性指定事件处理函数（注意大小写）
+                    a，React使用的事自定义（合成）事件，而不是原生Dom事件 ——————为了更好的兼容
+                    b，React中的时间是通过事件委托的方式处理的（委托给组件最外层的元素）——————为了高效
+                （2）通过event.target得到发生事件的DOM元素对象  -——————避免过度使用ref 发生事件的对象跟操作的dom是同一个元素
+            */
+            myRef=React.createRef()
+            showData=()=>{
+                console.log(this.myRef.current)
+            }
+            showData2=(event)=>{
+                console.log(event.target.value)
+            }
+            render(){
+                return (
+                    <div>
+                        <input type="text" ref={this.myRef} placeholder="点击按钮提示数据" />
+                        <button onClick={this.showData} >点击我提示左侧数据</button>    
+                        <input type="text" onBlur={this.showData2} type="text" placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Demo/>,document.getElementById('text'))
+</script>
+</body>
+</html>

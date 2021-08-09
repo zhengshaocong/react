@@ -1,0 +1,65 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-22 11:33:41
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Weather extends React.Component{
+            constructor(props){
+                super(props)
+                this.state={
+                    isHot:true,
+                    wind:'威风'
+                }
+                this.changeWeather=this.changeWeather.bind(this)
+                //由于直接在render里赋值函数会导致函数是在window内直接执行而不是由实例对象执行 （this默认指向执行他的对象）
+                //因此为了强行将函数的指向该为实例对象，因此需要使用bind来强制改变this的默认指向，使他强行指向this（也就是实例对象本身）
+            }
+            changeWeather(){
+                //changeWeather是存于与实例对象的原型链上
+                //当onClick直接调用changeWeather时，并不是通过实例对象调用的 是在window直接调用
+                //而一个函数的this默认指向是执行它的对象 此刻onClick的获取到的this是指向window（由于严格模式，函数默认执行winow时会被限制为undefined）
+                
+                // this.state.isHot=!this.state.isHot//无效
+                // console.log(this.state.isHot)//有变化但是没渲染
+                // // 状态不能直接改
+
+                
+                this.setState({isHot:!this.state.isHot})
+                //state必须通过setState变化
+            }
+            render(){//页面更新
+                //每次state变化时都需要再执行
+                // console.log(this)
+                let {isHot,wind}=this.state
+                return (
+                    // <div onClick={()=>{this.changeWeather()}}>
+                    <div onClick={this.changeWeather}>
+                        今天天气很{isHot?'炎热':'寒冷'} {wind}
+                    </div>
+                )
+                //注意 这里的changeWeather并不是原型链上的changeWeather 因为实例对象在检索的时候 会优先检索实例对象本身的 在寻找不到之后 才回沿着原型链上检索目标
+            }
+        }
+        ReactDOM.render(<Weather name='12313'/>,document.getElementById('text'))
+    </script>
+</body>
+</html>

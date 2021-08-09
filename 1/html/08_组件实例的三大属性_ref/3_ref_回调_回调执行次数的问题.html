@@ -1,0 +1,55 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-23 15:29:20
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Demo extends React.Component{
+            showData=()=>{
+                // console.log(this.input1)
+                this.setState({isHot:!this.state.isHot})
+            }
+            state={isHot:false}
+            saveInput=(c)=>{
+                this.input1=c;
+                console.log('@',c)
+            }
+            render(){
+                let {isHot}=this.state
+                return (
+                    <div>
+                        <h2>今天天气很{isHot?'热':'冷'}</h2>
+                        { /* <input type="text" ref={(c)=>{this.input1=c;console.log('@',c)}} placeholder="点击按钮提示数据" />*/ }
+                        <input type="text" ref={this.saveInput} placeholder="点击按钮提示数据" />
+                        <button onClick={this.showData} >点击我提示左侧数据</button>    
+                    </div>
+                )
+            }
+            //回调内联式回调函数在状态更新时 会触发两次 因为内联函数没有存储 每次触发render时 对它来说都是新的函数 
+            //因此在更新时 为了保证更新效果 在更新时ref会先触发一次回调并且传递参数null 然后再次触发回调 传递正常的dom
+            //但当你使用类绑定函数时 render在更新时会发现ref的函数已经存在 此时它便直接回调正常的dom值
+            //注意：这样的不同几乎不会造成什么问题 因此在开发时使用内联式也是可以的 且方便
+        }
+
+        ReactDOM.render(<Demo/>,document.getElementById('text'))
+</script>
+</body>
+</html>

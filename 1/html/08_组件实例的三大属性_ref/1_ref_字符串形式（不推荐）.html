@@ -1,0 +1,59 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-23 14:44:39
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        // class  extends React.Component{
+        //     render (){
+        //         return(
+        //             <div>
+        //                 <ul>
+        //                   <li>姓名：{this.props.name}</li>
+        //                   <li>性别：{this.props.gender}</li>
+        //                   <li>年龄：{this.props.age}</li>
+        //                 </ul>
+        //             </div>
+        //         )
+        //     }
+        // }
+        // let p={name:'老王',age:'18',gender:'女'}
+        // // ReactDOM.render(<Person name='聪歌' age='28' gender='男'/>,document.getElementById('text'))
+        // ReactDOM.render(<Person {...p}/>,document.getElementById('text'))
+        class Demo extends React.Component{
+            showData=()=>{
+                console.log(this.refs.input1.value)
+            }
+            render(){
+                return (
+                    <div>
+                        <input type="text" ref="input1" placeholder="点击按钮提示数据" />
+                        <button onClick={this.showData} >点击我提示左侧数据</button>    
+                        <input type="text" placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Demo/>,document.getElementById('text'))
+</script>
+</body>
+</html>

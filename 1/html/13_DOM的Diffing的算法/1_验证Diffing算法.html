@@ -1,0 +1,52 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-25 09:51:00
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Time extends React.Component{
+            state={
+                date:new Date()
+            }
+            componentDidMount(){
+                setInterval(()=>{
+                    this.setState({
+                        date:new Date()
+                    })
+                },1000)
+            }
+            render(){
+                return(
+                    <div>
+                        <h1>Hello</h1>
+                        <input type="text" />
+                        <span>现在是：{this.state.date.toTimeString()}</span>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Time />,document.getElementById('text'))
+        //该组件每秒都会发生状态改变 每次render都会执行函数 但是 相应的 
+        //在每次发生改变的时候 会创建虚拟Dom 新的虚拟Dom会与旧的虚拟DOM 对比 若两个DOM 没有变化则不改变对应的真实DOM 可以给input输入值 状态改变时 input的值没有消失可以看出来
+        //虚拟DOM的对比运算叫Diffing算法，Diffing会遍历对比到最小标签为止
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.dropdownv{
+    color: #fff;
+}
+.context{
+    height: 100vh;
+}

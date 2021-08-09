@@ -1,0 +1,23 @@
+import Count from '../../components/Count'
+import {connect} from 'react-redux'
+import {createIncrementAction,createDecrementAction,createIncrementAsyncAction} from '../../redux/count_action'
+//a函数的返回值作为状态传递给了UI
+function mapStateToProps(state){
+    return {count:state}
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        increment:(data)=>{
+            dispatch(createIncrementAction(data))
+        },
+        decrement:(data)=>{
+            dispatch(createDecrementAction(data))
+        },
+        incrementAsync:(data,time)=>{
+            dispatch(createIncrementAsyncAction(data,time))
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Count)

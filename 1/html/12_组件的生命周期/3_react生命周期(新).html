@@ -1,0 +1,92 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-24 18:26:26
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/new/react.development.js"></script>
+    <script type="text/javascript" src="../../js/new/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/new/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/new/prop-types.js"></script>
+    <script type="text/babel">
+        class Add extends React.Component{
+            constructor(props){
+                console.log('Count-constructor')
+                super(props)
+            }
+            state={
+                count:0,
+                count2:0
+            }
+            add=()=>{
+                let {count,count2}=this.state
+                count+=1
+                count2+=2
+                this.setState({count,count2})
+            }
+            remove=()=>{
+                ReactDOM.unmountComponentAtNode(document.getElementById('text'))
+            }
+            update=()=>{
+                this.forceUpdate()
+            }
+            //若 state 值返回中 都取决prop值 即可使用 但官网警告 该状态会导致代码冗余 不建议使用
+            // static getDerivedStateFromProps(props,state){
+            //     console.log(state)
+            //     console.log('getDerivedStateFromProps')
+            //     return {count:10086}
+            // }
+            getSnapshotBeforeUpdate(preProps,preState){//快照 该函数会将返回数据 赋予componentDidUpdate的第三个参数
+                console.log('getSnapshotBeforeUpdate')
+                return null
+            }
+
+            componentDidMount(){//组件挂载完毕 
+                console.log('componentDidMount')
+            }
+            shouldComponentUpdate(){//是否允许组件变更的阀门 注意 状态会正常先更新 
+                // let {count} =this.state
+                // console.log('shouldComponentUpdate')
+                // if(count>5){
+                //     return true
+                // }else{
+                //     return false
+                // }
+
+                return true
+            }
+            componentDidUpdate(preProps,preState){//组件更新完毕
+                console.log('componentDidUpdate')
+            }
+            render() {
+                console.log('rend')
+                const {count,count2} =this.state
+                return (
+                    <div>
+                        <h1>当前为{count}</h1>
+                        <h1>当前为{count2}</h1>
+                        <button onClick={this.add}>点我+1</button>   
+                        <button onClick={this.remove}>卸载组件</button>
+                        <button onClick={this.update}>强制更新</button>  
+                    </div>
+                )   
+            }
+        }
+
+        ReactDOM.render(<Add />,document.getElementById('text'))
+    </script>
+</body>
+</html>

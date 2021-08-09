@@ -1,0 +1,43 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-22 09:49:38
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Dom extends React.Component{
+            render(){
+                return (
+                    <div>
+                        Hello {this.props.name}
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Dom name='12313'/>,document.getElementById('text'))
+        /* 
+          执行了ReactDOM.render(<Dom /> ....)之后发生了什么
+          1.React 解析组件标签 找到Dom组件
+          2.发现组件是类定义。随后new出实例，并同过该实例 调用到原型上的render的方法
+          3.将render返回的虚拟dom 转化为 真实dom
+        */
+    </script>
+</body>
+</html>

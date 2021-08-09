@@ -1,0 +1,82 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-20 17:35:52
+ * @LastEditTime: 2021-02-24 19:14:29
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react\1\html\05_react中定义组件\1_函数式组件.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .list{
+            width: 200px;
+            height: 150px;
+            background-color: skyblue;
+            overflow: auto;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .news{
+            height: 30px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id='text'></div>
+  
+    <script type="text/javascript" src="../../js/new/react.development.js"></script>
+    <script type="text/javascript" src="../../js/new/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/new/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/new/prop-types.js"></script>
+    <script type="text/babel">
+        class NewList extends React.Component{
+            state={
+                    list:[1,2,3,4,5,6,7,8,9].reverse()
+                }
+            componentDidMount(){
+               this.timer= setInterval(()=>{
+                    const {list} =this.state
+                    const news =list.length+1
+                    this.setState({list:[news,...list]})
+                },500)
+            }
+            getSnapshotBeforeUpdate(){
+                return this.listNode.scrollHeight
+            }
+            componentDidUpdate(preProps,preState,height){
+                this.listNode.scrollTop += (this.listNode.scrollHeight-height)
+                console.log(this.listNode.scrollTop,'scrollTop')
+                console.log(this.listNode.scrollHeight,'scrollHeight')
+            }
+            componentWillUnmount(){
+                clearInterval(this.timer)
+            }
+            render(){
+                let {list}=this.state
+                return(
+                    <ul className="list" ref={(currenNode)=>{this.listNode=currenNode}}>
+                        {
+                            list.map(item=>{
+                                return (
+                                    <li key={item} className='news'>{item}</li>
+                                )
+                            })
+                        }
+                    </ul>
+                )
+            }
+        }
+        ReactDOM.render(<NewList />,document.getElementById('text'))
+    </script>
+</body>
+</html>
